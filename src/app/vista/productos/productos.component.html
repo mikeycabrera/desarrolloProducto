@@ -1,0 +1,38 @@
+<!--Autor: Miguel Cabrera Muñoz
+    Fecha: 15/10/2019
+    Descripcion: Demo para prueba de examen , mostrar producto y su detalle , mostrando el producto detalle ne una ventana modal-->
+<app-detalle-producto *ngIf="vlProductoSeleccionado" [vlDetalleProducto]="vlProductoSeleccionado"></app-detalle-producto>
+<div class="container">
+    <div class="row">
+        <div class="column-sm">
+            <div class="border-secondary mb-3">
+                <div class="card-header">Producto</div>
+                <div class="card-body text-secondary">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="row">Detalle</th>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="thead-light">
+                            <tr *ngFor="let producto of vlProducto">
+                                <td><button type="button" (click)="detalleModal(producto.id)" class="btn btn-success btn-sm">Detalle Producto</button></td>
+                                <td>{{producto.id}}</td>
+                                <td>{{producto.nombre}}</td>
+                                <td>{{producto.precio}}</td>
+                                <td>{{producto.stock}}</td>
+                                <td><button type="button" [routerLink]="" class="btn btn-outline-danger btn-sm">Eliminar</button></td>
+                                <td><button type="button" [routerLink]="" class="btn btn-outline-primary btn-sm">Editar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

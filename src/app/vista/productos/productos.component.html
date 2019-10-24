@@ -1,38 +1,51 @@
 <!--Autor: Miguel Cabrera Muñoz
     Fecha: 15/10/2019
     Descripcion: Demo para prueba de examen , mostrar producto y su detalle , mostrando el producto detalle ne una ventana modal-->
-<app-detalle-producto *ngIf="vlProductoSeleccionado" [vlDetalleProducto]="vlProductoSeleccionado"></app-detalle-producto>
-<div class="container">
-    <div class="row">
-        <div class="column-sm">
-            <div class="border-secondary mb-3">
-                <div class="card-header">Producto</div>
-                <div class="card-body text-secondary">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="row">Detalle</th>
-                                <th>Id</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="thead-light">
-                            <tr *ngFor="let producto of vlProducto">
-                                <td><button type="button" (click)="detalleModal(producto.id)" class="btn btn-success btn-sm">Detalle Producto</button></td>
-                                <td>{{producto.id}}</td>
-                                <td>{{producto.nombre}}</td>
-                                <td>{{producto.precio}}</td>
-                                <td>{{producto.stock}}</td>
-                                <td><button type="button" [routerLink]="" class="btn btn-outline-danger btn-sm">Eliminar</button></td>
-                                <td><button type="button" [routerLink]="" class="btn btn-outline-primary btn-sm">Editar</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+<button [routerLink]="['/gracfiaBarras']" type="button" class="btn btn-outline-primary">Graficas Costo Productos</button>
+<div class="example-header mat-elevation-z8">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Datos para filtrar la busqueda">
+    </mat-form-field>
+</div>
+<div class="example-container mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+        <!--  Columna Id producto-->
+        <ng-container matColumnDef="Pk">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Id product</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.pk}} </mat-cell>
+        </ng-container>
+        <!--  Columna Nombre-->
+        <ng-container matColumnDef="Name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+        <!--  Columna Precio-->
+        <ng-container matColumnDef="Price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Price</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.price}} </mat-cell>
+        </ng-container>
+
+        <!-- Columna Sku -->
+        <ng-container matColumnDef="Sku">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Sku</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.sku}} </mat-cell>
+        </ng-container>
+
+        <!-- Columna Stock-->
+        <ng-container matColumnDef="Stock">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Stock </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.stock}} </mat-cell>
+        </ng-container>
+
+        <!-- Columna Botton de acciones -->
+        <ng-container matColumnDef="Acciones">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Acciones</mat-header-cell>
+            <mat-cell *matCellDef="let row"> <button [routerLink]="['/detalleProducto', row.pk]" type="button" class="btn btn-outline-primary">Detalle</button></mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns" class="encabezado"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5,10,25,50,100]" [pageSize]="5" [showFirstLastButtons]>
+    </mat-paginator>
 </div>

@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DetalleProducto } from '../../clases/detalle-producto';
 import { ServiceService } from '../../servicios/service.service';
 import { ActivatedRoute } from '@angular/router';
-import { VentanaModal } from '../../clases/ventana-modal';
+import { Producto } from '../../clases/producto';
 
 @Component({
   selector: 'app-detalle-producto',
@@ -10,28 +9,19 @@ import { VentanaModal } from '../../clases/ventana-modal';
   styleUrls: ['./detalle-producto.component.css']
 })
 export class DetalleProductoComponent implements OnInit {
-@Input() vlDetalleProducto: DetalleProducto;
 vlid: number;
-vlDetalleSeleccionado: DetalleProducto;
-vlDetProducto: DetalleProducto;
-  constructor( private vlServicio: ServiceService, private vlrouter: ActivatedRoute, public vlVentanaModal: VentanaModal) { }
+titulo: 'Detalle Producto';
+vlDetProducto: Producto;
+  constructor( private vlServicio: ServiceService, private vlActivRoute: ActivatedRoute) { }
 
   ngOnInit() {
      this.DetalleProducto();
   }
 
-   DetalleProducto(): void {
-    this.vlrouter.params.subscribe(params => {
-      this.vlid = params.id;
-      if (this.vlid) {
-        this.vlServicio.getDetalleProducto(this.vlid).subscribe((vldetalleProducto) => this.vlDetalleProducto = vldetalleProducto);
-        console.log(this.vlServicio.getDetalleProducto(this.vlid));
-      }
-    });
- }
-  cerrarModal( vdetalleProducto: DetalleProducto) {
-    this.vlDetalleSeleccionado = vdetalleProducto;
-    this.vlVentanaModal.cerrarModal();
+   DetalleProducto() {
+    this.vlActivRoute.paramMap.subscribe(vlparam => {
+      this.vlid = +vlparam.get('id');
+      this.vlServicio.getDetalleproducto(this.vlid).subscribe(vlDetProducto => this.vlDetProducto = vlDetProducto);
+      });
   }
-
 }

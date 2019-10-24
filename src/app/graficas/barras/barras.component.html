@@ -1,0 +1,13 @@
+<button [routerLink]="['/producto']" type="button" class="btn btn-outline-primary">Regresar Datos Producto</button>
+<div class="center" style="width: 800px; height: 800px;">
+    <div>
+        <div>
+            <div>
+                <div>
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                </div>
+                <button mat-button mat-raised-button color="primary" (click)="randomize()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>

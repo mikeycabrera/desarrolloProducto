@@ -1,7 +1,7 @@
-import { OrdenPago } from './orden-pago';
+import { imagenes } from './images';
 
-describe('OrdenPago', () => {
+describe('imagenes', () => {
   it('should create an instance', () => {
-    expect(new OrdenPago()).toBeTruthy();
+    expect(new imagenes()).toBeTruthy();
   });
 });

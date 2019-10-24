@@ -4,8 +4,7 @@ import { of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import {map, catchError, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
-/*import { Region } from './region';*/
-import { Producto } from '../clases/customer';
+import { Producto } from '../clases/producto';
 import { DetalleProducto } from '../clases/detalle-producto';
 /*import Swal from 'sweetalert2';*/
 
@@ -13,26 +12,30 @@ import { DetalleProducto } from '../clases/detalle-producto';
   providedIn: 'root'
 })
 export class ServiceService {
-private vlurl = 'http://localhost:9393/api/productos';
-
+private vlurl = 'https://api.software.madkting.com/shops/76/products/';
+vlProducto: Producto;
+vlid: number;
 /*definir las cabeceras */
-private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: 'Token 599d4be34f2cf59df13ebb27e9852570bc0684d2',
+  })
+};
+httpHeaders  = new HttpHeaders({
+  'Content-Type': 'application/json',
+  Authorization: 'Token 599d4be34f2cf59df13ebb27e9852570bc0684d2'
+});
 
-  constructor( private vlHttpClient: HttpClient, private vlRoute: Router) { }
+  constructor( private vlHttpClient: HttpClient, private vlRoute: Router ) { }
 
   getProducto(): Observable<any> {
-    return this.vlHttpClient.get(this.vlurl).pipe(
+     return this.vlHttpClient.get(this.vlurl, {headers: this.httpHeaders}).pipe(
       map( (response) => response as Producto[] )
     );
   }
 
-  getDetalleProducto(vlid: number): Observable<any> {
-     return this.vlHttpClient.get<DetalleProducto>(`${this.vlurl}/detalleProducto/${vlid}`).pipe(
-       catchError( vlerror => {
-         /*this.vlRoute.navigate(['/producto']);*/
-         console.error(vlerror.error.mensage);
-         return throwError(vlerror);
-       })
-     );
+  getDetalleproducto(vlid): Observable<Producto> {
+    return this.vlHttpClient.post<Producto>(this.vlurl + vlid, this.httpOptions);
     }
   }
